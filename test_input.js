@@ -12,16 +12,16 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
     let dataTosend;
     let dataTosend2;
-    let datalist = [];
     const python = spawn('python3', ['test1.py']);
     python.stdout.on('data', (data) => {
         dataTosend = data.toString();
-        datalist.push(dataTosend);
-        python.stdin.write("hak\n");
+        python.stdin.on('close', (input) => {
+            
+        })
         console.log("stdout    "+dataTosend);
     });
     python.on('close', (code) => {
-        console.log(datalist);
+        console.log(dataTosend);
         res.send(dataTosend);
     })
 })
